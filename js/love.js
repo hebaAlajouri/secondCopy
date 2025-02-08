@@ -197,18 +197,24 @@
   "use strict";
   document.addEventListener("DOMContentLoaded", () => {
     loadFavorites();
-
-    // Event delegation for dynamically created elements
-    document.addEventListener("click", (event) => {
+    
+    document.getElementById("lo").addEventListener("click", (event) => {
+        console.log(event);
+        
         if (event.target.classList.contains("love") || event.target.closest(".love")) {
             const button = event.target.closest(".love");
             const bookId = button.dataset.id;
+            console.log(button, bookId);
+            
             toggleFavorite(bookId, button);
         }
 
         if (event.target.matches(".remove-favorite, .remove-favorite *")) {
+            console.log(button, bookId);
             const button = event.target.closest(".remove-favorite");
             const bookId = button.getAttribute("data-book-id");
+            console.log(bookId, bookId);
+                        
             if (bookId) {
                 removeFromFavorites(bookId);
             }
@@ -219,62 +225,69 @@
 function toggleFavorite(bookId, button) {
     let favorites = JSON.parse(localStorage.getItem("favorites")) || [];
 
-    // Prevent duplicate entries
-    const alreadyExists = favorites.some((book) => book.id === bookId);
-    if (alreadyExists) {
-        alert("This book is already in your favorites.");
-        return;
-    }
-
     const bookCard = button.closest(".col-md-4");
     if (!bookCard) return;
-
+    
+    
     const bookData = {
         id: bookId,
         imgSrc: bookCard.querySelector("img").src,
         title: bookCard.querySelector(".info a").textContent.trim(),
         link: bookCard.querySelector(".info a").href,
     };
+    console.log(bookData);
+    const exists = favorites.some((book) => book.id === bookId);
 
-    favorites.push(bookData);
+    if (!exists) {
+        favorites.push(bookData);
+        button.innerHTML = `<i class="fa-solid fa-heart"></i>`;
+        appendBookToFavorites(bookData);
+    } else {
+        favorites = favorites.filter((book) => book.id !== bookId);
+        button.innerHTML = `<i class="fa-regular fa-heart"></i>`;
+        document.querySelector(`.card[data-id="${bookId}"]`)?.remove();
+    }
+
     localStorage.setItem("favorites", JSON.stringify(favorites));
-
-    button.innerHTML = `<i class="fa-solid fa-heart"></i>`; // Filled heart
-    loadFavorites();
 }
 
 function loadFavorites() {
-    let favorites = JSON.parse(localStorage.getItem("favorites")) || [];
+    const favorites = JSON.parse(localStorage.getItem("favorites")) || [];
     const container = document.getElementById("favoritesContainer");
 
-    if (!container) {
-        console.error("Favorites container not found.");
-        return;
-    }
-
-    container.innerHTML = ""; // Clear previous items
+    if (!container) return;
+    
+    container.innerHTML = ""; // Clear UI to prevent duplication
 
     if (favorites.length === 0) {
         container.innerHTML = "<p>No favorite books yet.</p>";
         return;
     }
 
-    favorites.forEach((book) => {
-        const card = document.createElement("div");
-        card.className = "card favorite";
-        card.setAttribute("data-id", book.id);
+    favorites.forEach(appendBookToFavorites);
+}
 
-        card.innerHTML = `
-            <img src="${book.imgSrc}" alt="Book Cover" />
-            <h2>${book.title}</h2>
-            <p>Description goes here...</p>
-            <button class="remove-favorite" data-book-id="${book.id}">
-                <i class="fa fa-trash"></i> Remove
-            </button>
-        `;
+function appendBookToFavorites(book) {
+    const container = document.getElementById("favoritesContainer");
 
-        container.appendChild(card);
-    });
+    if (!container) return;
+    if (document.querySelector(`.card[data-id="${book.id}"]`)) return; // Prevent duplicate entries
+
+    const card = document.createElement("div");
+    card.className = "card favorite";
+    card.setAttribute("data-id", book.id);
+    
+
+    card.innerHTML = `
+        <img src="${book.imgSrc}" alt="Book Cover" />
+        <h2>${book.title}</h2>
+        <p>Description goes here...</p>
+        <button class="remove-favorite" data-book-id="${book.id}">
+            <i class="fa fa-trash"></i> Remove
+        </button>
+    `;
+
+    container.appendChild(card);
 }
 
 function removeFromFavorites(bookId) {
@@ -282,8 +295,12 @@ function removeFromFavorites(bookId) {
     favorites = favorites.filter((book) => book.id !== bookId);
     localStorage.setItem("favorites", JSON.stringify(favorites));
 
-    loadFavorites(); // Refresh favorites dynamically
+    document.querySelector(`.card[data-id="${bookId}"]`)?.remove(); // Remove only the clicked book
 }
+
+
+
+
 
 
 
