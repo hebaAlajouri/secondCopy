@@ -11,7 +11,7 @@ h1 {
 
 .book-cards {
     display: grid;
-    /* flex-wrap: wrap; */
+    flex-wrap: wrap;
     justify-content: center;
     gap: 20px;
     margin-top: 20px;
@@ -75,7 +75,6 @@ h1 {
 /* Container to hold the book cards */
 #favoritesContainer {
     display: flex;
-    /* grid-template-columns: 3; */
     flex-wrap: wrap;
     gap: 15px; /* Space between items */
     justify-content: flex-start; /* Align to the left */
@@ -83,7 +82,7 @@ h1 {
 
 /* Style for each individual card */
 .card {
-    width: 400%; /* Ensure that cards take up less than 25% of the container */
+    width: 200%; /* Ensure that cards take up less than 25% of the container */
     box-sizing: border-box;
     margin-bottom: 20px; /* Space between rows */
     padding: 10px;
