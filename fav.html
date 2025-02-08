@@ -4,65 +4,85 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Favorites</title>
-    <link rel="stylesheet" href="css/stylefav.css" />
-    <script src="https://kit.fontawesome.com/YOUR_FONT_AWESOME_KEY.js" crossorigin="anonymous"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Unbounded:wght@300;400;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <link href="css/bootstrap.min.css" rel="stylesheet" />
+
+    <link href="css/bootstrap-icons.css" rel="stylesheet" />
+
+    <link href="css/templatemo-ebook-landing.css" rel="stylesheet" />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./css/tryy.css" />
+    <script
+      src="https://kit.fontawesome.com/YOUR_FONT_AWESOME_KEY.js"
+      crossorigin="anonymous"
+    ></script>
   </head>
   <body>
     <h1>My Favorite Books</h1>
-    <div id="favoritesContainer" class="book-cards"></div>
-    
-  </body>
-</html>
-
-
+    <div
+      id="favoritesContainer"
+      class="book-cards"
+      style="display: flex; flex-wrap: wrap"
+    ></div>
     <script>
-   document.addEventListener("DOMContentLoaded", () => {
-    let favorites = JSON.parse(localStorage.getItem("favorites")) || [];
-    const container = document.getElementById("favoritesContainer");
+      window.onload = function () {
+        let favorites = JSON.parse(localStorage.getItem("favorites")) || [];
+        const container = document.getElementById("favoritesContainer");
 
-    if (favorites.length === 0) {
-        container.innerHTML = "<p class='no-favorites'>No favorite books added yet.</p>";
-        return;
-    }
+        favorites.forEach((book) => {
+          const card = document.createElement("div");
+          card.className = "col-md-4 card";
+          card.setAttribute("data-id", book.id);
 
-    favorites.forEach((book) => {
-        const card = document.createElement("div");
-        card.className = "book-card";
-        card.setAttribute("data-id", book.id);
+          const img = document.createElement("img");
+          img.src = book.imgSrc;
+          img.alt = "Book Cover";
+          img.className = "d-block w-100";
 
-        const img = document.createElement("img");
-        img.src = book.imgSrc;
-        img.alt = "Book Cover";
+          const info = document.createElement("div");
+          info.innerHTML = book.more + book.love;
+          info.className = "info";
 
-        const infoDiv = document.createElement("div");
-        infoDiv.className = "book-info";
+          const heartButton = info.querySelector(".heart");
+          if (heartButton) {
+            heartButton.classList.add("liked");
+            heartButton.addEventListener("click", () => {
+              removeFromFavorites(book.id);
+            });
+          }
 
-        const title = document.createElement("h2");
-        title.innerHTML = `<a href="${book.link}" target="_blank">${book.title}</a>`;
+          card.appendChild(img);
+          card.appendChild(info);
 
-        const button = document.createElement("button");
-        button.className = "remove-favorite";
-        button.innerHTML = `<i class="fa-solid fa-trash"></i> Remove`;
-        button.onclick = function () {
-          console.log(book.id);
-          
-            removeFromFavorites(book.id);
-        };
+          container.appendChild(card);
+        });
+      };
 
-        infoDiv.appendChild(title);
-        infoDiv.appendChild(button);
-        card.appendChild(img);
-        card.appendChild(infoDiv);
-        container.appendChild(card);
-    });
-});
-
-function removeFromFavorites(bookId) {
-    let favorites = JSON.parse(localStorage.getItem("favorites")) || [];
-    favorites = favorites.filter((book) => book.id !== bookId);
-    localStorage.setItem("favorites", JSON.stringify(favorites));
-}
-
+      function removeFromFavorites(bookId) {
+        let favorites = JSON.parse(localStorage.getItem("favorites")) || [];
+        favorites = favorites.filter((book) => book.id !== bookId);
+        localStorage.setItem("favorites", JSON.stringify(favorites));
+        window.location.reload();
+      }
     </script>
+
+    <script src="js/bootstrap.bundle.min.js"></script>
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+      crossorigin="anonymous"
+    ></script>
   </body>
 </html>
