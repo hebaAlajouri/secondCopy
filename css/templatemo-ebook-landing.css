@@ -960,6 +960,110 @@ strong {
   width: 3rem;
  background-color: #000000;
 }
+.comment-section {
+  background: #fff;
+  padding: 20px;
+  margin: 20px 0;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+}
+
+.comment-section h2 {
+  text-align: center;
+  color: #333;
+}
+
+.comment-section form {
+  display: flex;
+  flex-direction: column;
+}
+
+.comment-section input,
+.comment-section textarea,
+.comment-section select,
+.comment-section button {
+  margin: 10px 0;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+  width: 100%;
+}
+
+.comment-section button {
+  background: #28a745;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.comment-section button:hover {
+  background: #218838;
+}
+
+/* Comment Box */
+.comment-box {
+  display: flex;
+  align-items: center;
+  background: #f1f1f1;
+  padding: 10px;
+  margin-top: 10px;
+  border-radius: 5px;
+  flex-wrap: wrap; /* Ensure items wrap on smaller screens */
+}
+
+/* Profile Photo */
+.profile-photo {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid #ccc;
+  margin-right: 10px;
+}
+
+/* Comment Content */
+.comment-content {
+  flex: 1;
+}
+
+/* Delete Button */
+.delete-btn {
+  background: #dc3545;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  margin-left: 10px;
+  cursor: pointer;
+  border-radius: 5px;
+  font-size: 14px;
+}
+
+.delete-btn:hover {
+  background: #c82333;
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+  .comment-box {
+      flex-direction: column;
+      align-items: flex-start;
+  }
+
+  .profile-photo {
+      width: 40px;
+      height: 40px;
+      margin-bottom: 5px;
+  }
+
+  .delete-btn {
+      margin-left: 0;
+      margin-top: 5px;
+      width: 100%;
+      text-align: center;
+  }
+}
+
 
 /*---------------------------------------
   RESPONSIVE STYLES               
