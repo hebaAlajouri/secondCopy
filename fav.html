@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Favorites</title>
-    <link rel="stylesheet" href="stylefav.css" />
+    <link rel="stylesheet" href="css/stylefav.css" />
     <script src="https://kit.fontawesome.com/YOUR_FONT_AWESOME_KEY.js" crossorigin="anonymous"></script>
   </head>
   <body>
@@ -44,6 +44,8 @@
         button.className = "remove-favorite";
         button.innerHTML = `<i class="fa-solid fa-trash"></i> Remove`;
         button.onclick = function () {
+          console.log(book.id);
+          
             removeFromFavorites(book.id);
         };
 
@@ -59,7 +61,6 @@ function removeFromFavorites(bookId) {
     let favorites = JSON.parse(localStorage.getItem("favorites")) || [];
     favorites = favorites.filter((book) => book.id !== bookId);
     localStorage.setItem("favorites", JSON.stringify(favorites));
-    location.reload();
 }
 
     </script>
