@@ -1,0 +1,42 @@
+.card {
+    border: 1px solid #ccc;
+    padding: 16px;
+    margin: 16px;
+    text-align: center;
+    width: 200px;
+    position: relative;
+    border-radius: 10px; /* زاوية مستديرة */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* ظل */
+    transition: transform 0.2s; /* تأثير التحريك عند المرور */
+  }
+  
+  .card:hover {
+    transform: scale(1.05); /* تكبير عند المرور */
+  }
+  
+  .card img {
+    width: 100px;
+    height: 150px;
+    border-radius: 5px; /* زاوية مستديرة للصورة */
+  }
+  
+  /* تصميم القلب */
+  .card .heart {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 24px;
+    color: grey;
+    cursor: pointer;
+    transition: color 0.2s; /* تأثير التحريك عند التغيير */
+  }
+  
+  .card .heart.liked {
+    color: red;
+  }
+  
+  /* تصميم مخصص للكارد في صفحة المفضلات */
+  .card.favorite {
+    background-color: #f9f9f9; /* خلفية مميزة */
+    border-color: #ff4081; /* حدود مميزة */
+  }
